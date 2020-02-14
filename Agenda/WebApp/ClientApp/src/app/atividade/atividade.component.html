@@ -1,0 +1,53 @@
+<p>
+    <button class="btn btn-primary" (click)="incluir()">
+        Nova Atividade
+    </button>
+</p>
+<div>
+    <span *ngIf="notification" class="elementToFadeInAndOut">
+        <i class="fas fa-check-circle {{notification.class}}"></i>
+        {{notification.message}}
+    </span>
+</div>
+<div class="grid-table table-bordered">
+    <div class="thead">
+        <div class="tr">
+            <div class="td">Nome</div>
+            <div class="td">Data de Realização</div>
+            <div class="td">Data Fim</div>
+            <div class="td">Situação</div>
+            <div class="td">Importante</div>
+            <div class="td">Ações</div>
+
+        </div>
+    </div>
+    <div class="tbody">
+        <form class="tr" [ngClass]="getClass(fg.get('situacao').value)" [formGroup]="fg" *ngFor="let fg of atividadeForms.controls;index as i;" (submit)="alterarDados(fg)">
+            <div class="td">
+                <input class="form-control" formControlName="nome">
+            </div>
+            <div class="td">
+                <input class="form-control" formControlName="datarealizada" type="date">
+            </div>
+            <div class="td">
+                <input class="form-control" formControlName="datafim" type="date">
+            </div>
+            <div class="td">
+                <input class="form-control" formControlName="situacao" disabled="true">
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="check1" formControlName="importante">
+
+            </div>
+
+            <div class="td">
+                <button type="submit" class="btn-outline-dark" [disabled]="fg.invalid"><i
+                    class="far fa-save fa-lg"></i> Alterar </button>
+                <button class="btn btn-light ml-1" (click)="deletarDados(fg.get('id').value,i)">
+                        <i class="far fa-trash-alt fa-lg text-danger"></i>
+                    </button>
+            </div>
+
+        </form>
+    </div>
+</div>
